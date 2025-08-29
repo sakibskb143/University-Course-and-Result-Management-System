@@ -1,0 +1,256 @@
+:root {
+    --primary-color: rgba(18, 88, 117, 0.8);
+    --accent-color: rgb(255, 115, 80);
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+/* Brand styling */
+.fa-graduation-cap {
+    color: var(--accent-color);
+    font-size: 32px;
+}
+
+.brand-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin: 0;
+}
+
+.brand-title span {
+    color: var(--primary-color);
+}
+
+.brand-title .highlight {
+    color: var(--accent-color);
+}
+
+/* Navbar link styles */
+.nav-link {
+    font-weight: 600;
+    color: rgb(22, 37, 66) !important;
+
+}
+
+.nav-link:hover {
+    color: var(--accent-color) !important;
+}
+
+
+/* Small device login buttons */
+.nav-item.d-lg-none .btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    transition: all 0.4s ease;
+    /* Moved here */
+}
+
+.nav-item.d-lg-none .btn:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+}
+
+/* Banner section style */
+.custom-carousel-control {
+    width: 48px;
+    height: 48px;
+    background-color: white;
+    color: black;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 10;
+}
+
+/* Space from edges */
+.carousel-control-prev.custom-carousel-control {
+    left: 30px;
+    /* distance from left */
+}
+
+.carousel-control-next.custom-carousel-control {
+    right: 30px;
+    /* distance from right */
+}
+
+.custom-carousel-control:hover,
+.custom-carousel-control:focus {
+    background-color: var(--accent-color);
+    opacity: 1;
+    outline: none;
+}
+
+/* Override default icon color for black arrows */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none;
+    /* Remove default background */
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+
+/* Custom black SVG arrows */
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Black left arrow */
+.carousel-control-prev-icon::before {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path d='M5.5 0L1 4l4.5 4V0z'/></svg>");
+}
+
+/* Black right arrow */
+.carousel-control-next-icon::before {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'><path d='M2.5 0v8L7 4 2.5 0z'/></svg>");
+}
+
+/* Buttons inside slides (your existing styles) */
+.btn-more {
+    background-color: var(--accent-color);
+    color: #fff;
+    border: none;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-more:hover {
+    background-color: var(--primary-color);
+}
+
+.btn-more-1 {
+    border: 1px solid white;
+    color: #fff;
+    background-color: transparent;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-more-1:hover {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+
+/* Large device login buttons */
+.btn-login {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+
+}
+
+.btn-login:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    transition: all 0.4s ease;
+
+}
+
+
+
+/* Footer text and link styles */
+.bg-custom-blue {
+    background: var(--accent-color);
+    color: white;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover,
+footer a:focus {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+/* SVG icon size & spacing */
+svg.size-6 {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    stroke: var(--accent-color);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    margin-right: 0.5rem;
+}
+
+/* List item alignment */
+.footer-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.6rem;
+}
+
+.hr-line {
+
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* Text white in footer */
+.footer-text-white {
+    color: white;
+}
+
+/* style about section*/
+.about-para {
+    color: #245b73;
+    font-size: 18px;
+}
+
+.bg-org {
+    background-color: var(--accent-color);
+}
+
+.accent-color {
+    color: var(--accent-color)
+}
+
+/* Custom Hover Effect */
+.btn-hover-white {
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-hover-white:hover {
+    background-color: #fff !important;
+    color: var(--accent-color) !important;
+    /* Text turns black for contrast */
+}
+
+.para-color {
+    color: rgb(22, 37, 66);
+}
+
+.form-section {
+    padding: 200px !important;
+}
+
+body {
+    padding-top: 56px;
+    font-family: "Open Sans", sans-serif;
+}

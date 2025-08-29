@@ -1,0 +1,68 @@
+:root {
+    --primary-color: #125875;
+    --accent-color: #ff7350;
+}
+
+body {
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-card {
+    max-width: 400px;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-card h2 {
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.primary-color {
+    color: var(--primary-color);
+}
+
+.accent-color {
+    color: var(--accent-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-color);
+}
+
+/* Input styling */
+.form-control {
+    border: 2px solid #d1d5db;
+    /* normal border */
+    border-radius: 8px;
+    padding: 10px 14px;
+    transition: all 0.3s ease;
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+    /* normal placeholder */
+    transition: color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(18, 88, 117, 0.25);
+    /* subtle glow */
+}
+
+.form-control:focus::placeholder {
+    color: var(--primary-color);
+}
