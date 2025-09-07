@@ -1,63 +1,57 @@
- <div id="departments" class="content-section">
-     <h4>Department Management</h4>
+@extends('admin.layout')
 
-     <!-- Button to open modal -->
-     <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">
-         Add Department
-     </button>
+@section('title', 'Departments')
 
-     <table class="table table-bordered">
-         <thead>
-             <tr>
-                 <th>Code</th>
-                 <th>Name</th>
-             </tr>
-         </thead>
-         <tbody>
-             <tr>
-                 <td>CSE</td>
-                 <td>Computer Science & Engineering</td>
-             </tr>
-         </tbody>
-     </table>
- </div>
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Departments</h4>
 
- <!-- Bootstrap Modal -->
- <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
+    <!-- Link to Create Department Page -->
+    <a href="{{ route('departments.create') }}" class="btn btn-primary">
+        Add Department
+    </a>
+</div>
 
-             <!-- Modal Header -->
-             <div class="modal-header">
-                 <h5 class="modal-title" id="addDepartmentModalLabel">Add Department</h5>
-                 <button type="button" class="btn-close primary-color" data-bs-dismiss="modal" aria-label="Close"></button>
-             </div>
+<!-- Success Message -->
+@if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-             <!-- Modal Body (Form) -->
-             <div class="modal-body">
-                 {{-- action="{{ route('departments.store') }}" method="POST" --}}
-                 <form>
-                     @csrf
-                     <div class="mb-3">
-                         <label for="department_code" class="form-label">Department Code</label>
-                         <input type="text" class="form-control" id="department_code" name="department_code"
-                             placeholder="e.g., CSE" required>
-                     </div>
-                     <div class="mb-3">
-                         <label for="department_name" class="form-label">Department Name</label>
-                         <input type="text" class="form-control" id="department_name" name="department_name"
-                             placeholder="e.g., Computer Science & Engineering" required>
-                     </div>
-
-                     <!-- Modal Footer -->
-                     <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                         <button type="submit" class="btn btn-primary">Add Department</button>
-                     </div>
-                 </form>
-             </div>
-
-         </div>
-     </div>
- </div>
+<!-- Departments Table -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @forelse($departments as $dept)
+        <tr>
+            <td>{{ $dept->id }}</td>
+            <td>{{ $dept->department_code }}</td>
+            <td>{{ $dept->department_name }}</td>
+            <td>{{ $dept->created_at->format('d M Y') }}</td>
+            <td>{{ $dept->updated_at->format('d M Y') }}</td>
+            <td>
+                <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                <form action="{{ route('departments.destroy', $dept->id) }}" method="POST" class="d-inline"
+                      onsubmit="return confirm('Are you sure?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        @empty
+        <tr>
+            <td colspan="6" class="text-center text-muted">No departments found.</td>
+        </tr>
+        @endforelse
+    </tbody>
+</table>
+@endsection
