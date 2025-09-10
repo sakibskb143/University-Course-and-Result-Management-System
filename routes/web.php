@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\CourseAssignmentController;
+
 
 Route::get('/', function () {
     return view('pages.home');
@@ -60,4 +63,11 @@ Route::post('/courses', [CourseController::class, 'store'])->name('courses.store
 Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
 Route::put('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
 Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
+
+
+
+
+
+Route::resource('teachers', TeacherController::class);
+Route::resource('course_assignments', CourseAssignmentController::class);
 
