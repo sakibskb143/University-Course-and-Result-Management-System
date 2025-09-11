@@ -35,8 +35,12 @@
             </a>
         </li>
 
-        <li class="nav-item"><a href="#" class="nav-link" data-target="students"><i
-                    class="fa-solid fa-user-graduate"></i> Students</a></li>
+        <li class="nav-item">
+            <a href="{{ route('students.index') }}" class="nav-link" data-target="students">
+                <i class="fa-solid fa-user-graduate"></i> Students
+            </a>
+        </li>
+
         <li class="nav-item"><a href="#" class="nav-link" data-target="classroom"><i
                     class="fa-solid fa-door-open"></i> Classroom Allocation</a></li>
         <li class="nav-item"><a href="#" class="nav-link" data-target="schedule"><i

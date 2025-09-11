@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\CourseAssignmentController;
+use App\Http\Controllers\StudentController;
 
 
 Route::get('/', function () {
@@ -71,3 +72,4 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('
 Route::resource('teachers', TeacherController::class);
 Route::resource('course_assignments', CourseAssignmentController::class);
 
+Route::resource('students', StudentController::class);
