@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\CourseAssignmentController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ClassroomAllocationController;
 
 
 Route::get('/', function () {
@@ -73,3 +74,6 @@ Route::resource('teachers', TeacherController::class);
 Route::resource('course_assignments', CourseAssignmentController::class);
 
 Route::resource('students', StudentController::class);
+
+
+Route::resource('classroom_assignments', ClassroomAllocationController::class);

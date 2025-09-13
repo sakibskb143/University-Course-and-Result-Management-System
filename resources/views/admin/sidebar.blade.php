@@ -41,8 +41,12 @@
             </a>
         </li>
 
-        <li class="nav-item"><a href="#" class="nav-link" data-target="classroom"><i
-                    class="fa-solid fa-door-open"></i> Classroom Allocation</a></li>
+        <li class="nav-item">
+            <a href="{{ route('classroom_assignments.index') }}" class="nav-link">
+                <i class="fa-solid fa-door-open"></i> Classroom Allocation
+            </a>
+        </li>
+
         <li class="nav-item"><a href="#" class="nav-link" data-target="schedule"><i
                     class="fa-solid fa-calendar"></i> Class Schedule</a></li>
         <li class="mt-4 border-top pt-2 nav-item border-white"><a href="#" class="nav-link "><i
