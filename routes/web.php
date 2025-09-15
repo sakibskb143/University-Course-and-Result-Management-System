@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-
+use App\Http\Controllers\EnrollmentController;  // ADD THIS LINE
 
 Route::get('/', function () {
     return view('pages.home');
@@ -32,3 +31,12 @@ Route::get('/student/login', function () {
 Route::get('/teacher/login', function () {
     return view('auth.teacher_login');
 })->name('teacher.login');
+
+// Student Enrollment Routes
+Route::prefix('student')->group(function() {
+    Route::get('/enroll', [EnrollmentController::class, 'showEnrollment'])->name('student.enroll');
+    Route::post('/enroll', [EnrollmentController::class, 'enrollCourse'])->name('student.enroll.submit');
+    Route::get('/my-enrollments', [EnrollmentController::class, 'showMyEnrollments'])->name('student.my_enrollments');
+    Route::get('/results', [EnrollmentController::class, 'showResults'])->name('student.results');
+    Route::get('/schedule', [EnrollmentController::class, 'showSchedule'])->name('student.schedule');
+});

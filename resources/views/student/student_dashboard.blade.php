@@ -249,18 +249,35 @@
 <!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    document.querySelectorAll('.sidebar .nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            const target = this.getAttribute('data-target');
-            if (target) {
-                document.getElementById(target).classList.add('active');
-            }
-        });
+   document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Remove active class from all links
+        document.querySelectorAll('.sidebar .nav-link').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        
+        // Hide all content sections
+        document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+        
+        const target = this.getAttribute('data-target');
+        
+        // Handle different navigation targets
+        if (target === 'enroll') {
+            // Redirect to enrollment page
+            window.location.href = '/student/enroll';
+        } else if (target === 'results') {
+            // Redirect to results page
+            window.location.href = '/student/results';
+        } else if (target === 'schedule') {
+            // Redirect to schedule page
+            window.location.href = '/student/schedule';
+        } else if (target) {
+            // Show content section for dashboard
+            document.getElementById(target).classList.add('active');
+        }
     });
+});
 </script>
 
 </body>
