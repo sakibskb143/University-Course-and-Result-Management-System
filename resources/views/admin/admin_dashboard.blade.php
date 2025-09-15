@@ -13,13 +13,19 @@
     <div class="col-md-4">
         <div class="card shadow-sm p-3 bg-secondary text-white">
             <h5>Total Courses</h5>
-            <h2>85</h2>
+            <h2>{{ $courses->count() }}</h2>
         </div>
     </div>
     <div class="col-md-4">
         <div class="card shadow-sm p-3 bg-success text-white">
             <h5>Total Students</h5>
-            <h2>1200</h2>
+            <h2>{{ $students->count() }}</h2>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm p-3 bg-success text-white">
+            <h5>Total Teachers</h5>
+            <h2>{{ $teachers->count() }}</h2>
         </div>
     </div>
 </div>
