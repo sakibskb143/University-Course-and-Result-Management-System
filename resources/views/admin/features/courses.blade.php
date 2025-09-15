@@ -1,61 +1,19 @@
-<div id="courses" class="content-section">
-    <h4>Course Management</h4>
+@extends('admin.layout')
 
-    <!-- Add Course Button -->
-    <button class="btn btn-primary mb-3" data-bs-toggle="collapse" data-bs-target="#addCourseForm">
-        Add Course
-    </button>
+@section('title', 'Course Management')
 
-    <!-- Collapsible Add Course Form -->
-    <div id="addCourseForm" class="collapse">
-        <form>
-            <div class="mb-3">
-                <label for="department_id" class="form-label">Department</label>
-                <select class="form-select" id="department_id" name="department_id" required>
-                    <option value="">-- Select Department --</option>
-                    <option value="1">Computer Science & Engineering</option>
-                    <option value="2">Electrical & Electronic Engineering</option>
-                    <option value="3">Business Administration</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="semester_id" class="form-label">Semester</label>
-                <select class="form-select" id="semester_id" name="semester_id" required>
-                    <option value="">-- Select Semester --</option>
-                    <option value="1">1st</option>
-                    <option value="2">2nd</option>
-                    <option value="3">3rd</option>
-                    <option value="4">4th</option>
-                    <option value="1">5st</option>
-                    <option value="2">6nd</option>
-                    <option value="3">7rd</option>
-                    <option value="4">8th</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="course_code" class="form-label">Course Code</label>
-                <input type="text" class="form-control" id="course_code" name="course_code" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="course_name" class="form-label">Course Name</label>
-                <input type="text" class="form-control" id="course_name" name="course_name" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="credit" class="form-label">Credit</label>
-                <input type="number" step="0.1" min="0.5" max="5.0" class="form-control" id="credit"
-                    name="credit" required>
-            </div>
-
-            <button type="button" class="btn btn-primary">Add Course</button>
-        </form>
+@section('content')
+<div class="content-section">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Course Management</h4>
+        <a href="{{ route('courses.create') }}" class="btn btn-primary">Add Course</a>
     </div>
 
-    <!-- Static Courses List -->
-    <table class="table table-bordered mt-4">
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    <table class="table table-bordered">
         <thead class="table-dark">
             <tr>
                 <th>Department</th>
@@ -63,30 +21,32 @@
                 <th>Code</th>
                 <th>Name</th>
                 <th>Credit</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Computer Science & Engineering</td>
-                <td>1st</td>
-                <td>CSE101</td>
-                <td>Introduction to Programming</td>
-                <td>3.0</td>
-            </tr>
-            <tr>
-                <td>Electrical & Electronic Engineering</td>
-                <td>2nd</td>
-                <td>EEE201</td>
-                <td>Circuits & Systems</td>
-                <td>3.5</td>
-            </tr>
-            <tr>
-                <td>Business Administration</td>
-                <td>3rd</td>
-                <td>BBA301</td>
-                <td>Principles of Management</td>
-                <td>2.5</td>
-            </tr>
+            @forelse($courses as $course)
+                <tr>
+                    <td>{{ $course->department->department_name }}</td>
+                    <td>{{ $course->semester_id }}{{ $course->semester_id==1 ? 'st' : ($course->semester_id==2 ? 'nd' : ($course->semester_id==3 ? 'rd' : 'th')) }}</td>
+                    <td>{{ $course->course_code }}</td>
+                    <td>{{ $course->course_name }}</td>
+                    <td>{{ $course->credit }}</td>
+                    <td>
+                        <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                        <form action="{{ route('courses.destroy', $course->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center">No courses found.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
+@endsection
