@@ -11,8 +11,7 @@
     @endif
 
     <a href="{{ route('classroom_assignments.create') }}" class="btn btn-primary mb-3">Allocate Classroom</a>
-       
-    here possible to add department and semester and search btn which find department and their semester based schdule
+
     <table class="table table-bordered">
         <thead>
             <tr>
