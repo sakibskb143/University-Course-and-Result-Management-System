@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherDashboardController;
 use App\Http\Controllers\CourseAssignmentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ClassroomAllocationController;
@@ -25,7 +25,7 @@ Route::get('/student', function () {
 Route::get('/teacher', function () {
     return view('teacher.teacher_dashboard');
 })->name('teacher.dashboard');
-// -------------------------login-------------------------------------------- 
+// -------------------------login--------------------------------------------
 Route::get('/admin/login', function () {
     return view('auth.admin_login');
 })->name('admin_login.login');
@@ -70,10 +70,31 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('
 
 
 
-Route::resource('teachers', TeacherController::class);
+Route::resource('teachers', TeacherDashboardController::class);
 Route::resource('course_assignments', CourseAssignmentController::class);
 
 Route::resource('students', StudentController::class);
 
 
 Route::resource('classroom_assignments', ClassroomAllocationController::class);
+
+
+
+// Teacher Dashboard Routes
+Route::prefix('teacher')->group(function () {
+    // Dashboard Overview
+    Route::get('/dashboard', [TeacherDashboardController::class, 'dashboard'])
+        ->name('teacher.dashboard');
+
+    // Assigned Courses
+    Route::get('/courses', [TeacherDashboardController::class, 'courses'])
+        ->name('teacher.courses');
+
+    // Class Schedule
+    Route::get('/schedule', [TeacherDashboardController::class, 'schedule'])
+        ->name('teacher.schedule');
+
+    // Save Student Result
+    Route::get('/save-result', [TeacherDashboardController::class, 'saveResult'])
+        ->name('teacher.save_result');
+});
