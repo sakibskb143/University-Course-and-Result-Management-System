@@ -3,8 +3,8 @@
     <div class="admin-info">
         <i class="fa-solid fa-user-circle"></i>
         <div class="admin-details primary-color">
-            <strong>John Doe</strong>
-            <small>admin@university.com</small>
+            <strong>{{ auth()->user()->name ?? 'Admin' }}</strong>
+            <small>{{ auth()->user()->email ?? 'admin@university.com' }}</small>
         </div>
     </div>
 </div>

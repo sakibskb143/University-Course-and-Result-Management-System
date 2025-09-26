@@ -16,9 +16,9 @@ class StoreTeacherRequest extends FormRequest
         return [
             'department_id' => 'required|exists:departments,id',
             'teacher_name' => 'required|string|max:255',
-            'email' => 'required|nullable|email|unique:teachers,email',
-            'contact_no' => 'required|nullable|digits:11|numeric',
-            'designation' => 'required|nullable|string|max:255',
+            'email' => 'nullable|email|unique:teachers,email',
+            'contact_no' => 'nullable|digits:11|numeric',
+            'designation' => 'nullable|string|max:255',
             'credit_to_be_taken' => 'required|numeric|min:20',
         ];
     }

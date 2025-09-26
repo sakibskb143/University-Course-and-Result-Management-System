@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('classroom_allocations', function (Blueprint $table) {
-            //
+            if (!Schema::hasColumn('classroom_allocations', 'semester_id')) {
+                $table->unsignedInteger('semester_id')->nullable()->after('course_id');
+                $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('set null');
+            }
         });
     }
 
@@ -22,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('classroom_allocations', function (Blueprint $table) {
-            //
+            if (Schema::hasColumn('classroom_allocations', 'semester_id')) {
+                $table->dropForeign(['semester_id']);
+                $table->dropColumn('semester_id');
+            }
         });
     }
 };

@@ -6,7 +6,7 @@
 <div class="content-section">
     <h4>Assign Course to Teacher</h4>
 
-    <form action="{{ route('course_assignments.store') }}" method="POST">
+    <form action="{{ route('admin.course_assignments.store') }}" method="POST">
         @csrf
 
         <!-- Department -->
@@ -61,7 +61,7 @@
         </div>
 
         <button type="submit" class="btn btn-success">Assign Course</button>
-        <a href="{{ route('course_assignments.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('admin.course_assignments.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 

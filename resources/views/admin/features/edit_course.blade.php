@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('courses.update', $course->id) }}" method="POST">
+        <form action="{{ route('admin.courses.update', $course->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -64,7 +64,7 @@
             </div>
 
             <div class="d-flex justify-content-between">
-                <a href="{{ route('courses.index') }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ route('admin.courses.index') }}" class="btn btn-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary">Update Course</button>
             </div>
         </form>

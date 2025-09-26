@@ -13,11 +13,11 @@
         <h2 class="text-center mb-3">Student Login</h2>
         <p class="text-center text-muted">Sign in to access your student dashboard</p>
 
-        <form action="{{ route('student.dashboard') }}" method="GET">
+        <form action="{{ route('student.login.submit') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="student_id" class="form-label">Student ID</label>
-                <input type="text" class="form-control" id="student_id" name="student_id" placeholder="Enter Student ID" required autofocus>
+                <label for="username" class="form-label">Student ID</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter Student ID" required autofocus>
             </div>
 
             <div class="mb-3">

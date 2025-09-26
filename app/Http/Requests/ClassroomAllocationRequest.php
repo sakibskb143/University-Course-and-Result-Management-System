@@ -22,7 +22,7 @@ class ClassroomAllocationRequest extends FormRequest
             'time_from' => 'required|date_format:H:i',
             'time_to' => 'required|date_format:H:i',
             'status' => 'required|in:0,1',
-            'semester' => 'required|integer|min:1|max:8',
+            'semester_id' => 'required|exists:semesters,id',
 
         ];
     }

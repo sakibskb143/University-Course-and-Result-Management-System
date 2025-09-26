@@ -12,7 +12,7 @@ class ClassroomAllocation extends Model
   protected $fillable = [
     'department_id',
     'course_id',
-    'semester', // add this
+    'semester_id',
     'room_id',
     'day',
     'time_from',
@@ -30,6 +30,11 @@ class ClassroomAllocation extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id');
     }
 
     public function room()

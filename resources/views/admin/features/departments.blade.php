@@ -7,7 +7,7 @@
     <h4>Departments</h4>
 
     <!-- Link to Create Department Page -->
-    <a href="{{ route('departments.create') }}" class="btn btn-primary">
+    <a href="{{ route('admin.departments.create') }}" class="btn btn-primary">
         Add Department
     </a>
 </div>
@@ -38,8 +38,8 @@
             <td>{{ $dept->created_at->format('d M Y') }}</td>
             <td>{{ $dept->updated_at->format('d M Y') }}</td>
             <td>
-                <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-secondary btn-sm">Edit</a>
-                <form action="{{ route('departments.destroy', $dept->id) }}" method="POST" class="d-inline"
+                <a href="{{ route('admin.departments.edit', $dept->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                <form action="{{ route('admin.departments.destroy', $dept->id) }}" method="POST" class="d-inline"
                       onsubmit="return confirm('Are you sure?');">
                     @csrf
                     @method('DELETE')

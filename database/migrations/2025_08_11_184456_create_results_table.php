@@ -14,14 +14,17 @@ return new class extends Migration {
             $table->decimal('marks', 5, 2)->default(0);
             $table->string('letter_grade', 4)->nullable();
             $table->decimal('grade_point', 3, 2)->nullable();
+            $table->unsignedInteger('semester_id')->nullable();
+            $table->boolean('published')->default(false);
             $table->timestamps();
 
             $table->foreign('enrollment_id')->references('id')->on('course_enrollments')->onDelete('set null');
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('set null');
 
             // optional: one result per student-course (per exam flow)
-            $table->unique(['student_id','course_id']);
+            $table->unique(['student_id','course_id','semester_id']);
         });
     }
 

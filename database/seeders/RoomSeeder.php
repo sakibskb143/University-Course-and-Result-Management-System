@@ -9,6 +9,9 @@ class RoomSeeder extends Seeder
 {
     public function run(): void
     {
-        Room::factory()->count(10)->create(); // creates 10 fake rooms
+        // Seed rooms 601 to 610
+        for ($i = 601; $i <= 610; $i++) {
+            Room::firstOrCreate(['room_no' => (string)$i]);
+        }
     }
 }

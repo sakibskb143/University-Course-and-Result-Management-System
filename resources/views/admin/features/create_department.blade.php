@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <form action="{{ route('departments.store') }}" method="POST">
+    <form action="{{ route('admin.departments.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
@@ -32,7 +32,7 @@
         </div>
 
         <div class="d-flex justify-content-between">
-            <a href="{{ route('departments.index') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('admin.departments.index') }}" class="btn btn-secondary">Cancel</a>
             <button type="submit" class="btn btn-primary">Save Department</button>
         </div>
     </form>

@@ -16,7 +16,7 @@ class StoreStudentRequest extends FormRequest
         $studentId = $this->route('student') ? $this->route('student')->id : null;
 
         return [
-            'student_reg_no' => 'required|string|max:50|unique:students,student_reg_no,' . $studentId,
+            'student_reg_no' => 'nullable|string|max:50|unique:students,student_reg_no,' . $studentId,
             'student_name'   => 'required|string|max:255',
             'email'          => 'nullable|email|unique:students,email,' . $studentId,
             'contact_no'     => 'nullable|string|max:20',

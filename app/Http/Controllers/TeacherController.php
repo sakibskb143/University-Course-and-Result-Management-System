@@ -6,6 +6,8 @@ use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Teacher;
 use App\Models\Department;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -35,9 +37,27 @@ class TeacherController extends Controller
             $data['credit_to_be_taken'] = number_format($data['credit_to_be_taken'], 2, '.', '');
         }
 
+        // Generate teacher username like TCHYYYYNNNN
+        $year = date('Y');
+        $sequence = str_pad((string)(User::where('role', 'teacher')->count() + 1), 4, '0', STR_PAD_LEFT);
+        $username = 'TCH' . $year . $sequence;
+
+        // Create user by username; email may be null or duplicate in other tables
+        $user = User::where('username', $username)->first();
+        if (!$user) {
+            $user = new User();
+            $user->username = $username;
+            $user->name = $data['teacher_name'];
+            $user->email = $data['email'] ?? null;
+            $user->role = 'teacher';
+            $user->password = 'password123';
+            $user->save();
+        }
+
+        $data['user_id'] = $user->id;
         Teacher::create($data);
 
-        return redirect()->route('teachers.index')->with('success', 'Teacher added successfully!');
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher added successfully and login created!');
     }
 
     public function edit(Teacher $teacher)
@@ -60,12 +80,12 @@ class TeacherController extends Controller
 
         $teacher->update($data);
 
-        return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully!');
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher updated successfully!');
     }
 
     public function destroy(Teacher $teacher)
     {
         $teacher->delete();
-        return redirect()->route('teachers.index')->with('success', 'Teacher deleted successfully!');
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher deleted successfully!');
     }
 }

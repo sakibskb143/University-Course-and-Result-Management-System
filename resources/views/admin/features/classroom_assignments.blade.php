@@ -10,7 +10,7 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('classroom_assignments.create') }}" class="btn btn-primary mb-3">Allocate Classroom</a>
+    <a href="{{ route('admin.classroom_assignments.create') }}" class="btn btn-primary mb-3">Allocate Classroom</a>
 
     <table class="table table-bordered">
         <thead>
@@ -30,7 +30,7 @@
             @forelse($allocations as $allocation)
                 <tr>
                     <td>{{ $allocation->department->department_name }}</td>
-                    <td>{{ $allocation->semester }}</td>
+                    <td>{{ optional($allocation->course)->semester ?? optional($allocation->semester)->semester_name ?? $allocation->semester_id }}</td>
                     <td>{{ $allocation->course->course_name }}</td>
                    <td>{{ $allocation->room->room_no }}</td>
                     <td>{{ $allocation->day }}</td>
@@ -38,8 +38,8 @@
                     <td>{{ $allocation->time_to }}</td>
                     <td>{{ $allocation->status ? 'Active' : 'Inactive' }}</td>
                     <td>
-                        <a href="{{ route('classroom_assignments.edit', $allocation) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="{{ route('classroom_assignments.destroy', $allocation) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('admin.classroom_assignments.edit', $allocation) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('admin.classroom_assignments.destroy', $allocation) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this allocation?')">Delete</button>
