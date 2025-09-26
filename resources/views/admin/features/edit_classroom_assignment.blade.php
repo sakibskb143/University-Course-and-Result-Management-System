@@ -16,13 +16,13 @@
         </div>
     @endif
 
-    <form action="{{ route('classroom_assignments.update', $allocation->id) }}" method="POST" class="card p-4 shadow-sm">
+    <form action="{{ route('admin.classroom_assignments.update', $allocation->id) }}" method="POST" class="card p-4 shadow-sm">
         @csrf
         @method('PUT')
         @include('admin.features.partials.classroom_form', ['allocation' => $allocation])
 
         <button type="submit" class="btn btn-success">Update</button>
-        <a href="{{ route('classroom_assignments.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('admin.classroom_assignments.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 @endsection

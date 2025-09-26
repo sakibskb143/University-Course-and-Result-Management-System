@@ -6,7 +6,7 @@
 <div id="students" class="content-section">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4 class="mb-0"><i class="fa-solid fa-user-graduate"></i> Student Management</h4>
-        <a href="{{ route('students.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.students.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-plus"></i> Add Student
         </a>
     </div>
@@ -44,10 +44,10 @@
                             <td>{{ $student->department->department_name }}</td>
                             <td>{{ $student->semester }}</td>
                             <td class="text-center">
-                                <a href="{{ route('students.edit', $student) }}" class="btn btn-sm btn-warning">
+                                <a href="{{ route('admin.students.edit', $student) }}" class="btn btn-sm btn-warning">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <form action="{{ route('students.destroy', $student) }}" method="POST" class="d-inline">
+                                <form action="{{ route('admin.students.destroy', $student) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this student?')">

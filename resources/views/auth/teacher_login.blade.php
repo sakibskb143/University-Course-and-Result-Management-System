@@ -16,7 +16,7 @@
         <h2 class="text-center mb-3">Teacher Login</h2>
         <p class="text-center text-muted">Sign in to access the teacher dashboard</p>
 
-        <form action="{{ route('teacher.dashboard') }}" method="GET">
+        <form action="{{ route('teacher.login.submit') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="username" class="form-label">Teacher ID</label>

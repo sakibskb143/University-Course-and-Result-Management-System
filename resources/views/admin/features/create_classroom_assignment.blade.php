@@ -16,12 +16,12 @@
         </div>
     @endif
 
-    <form action="{{ route('classroom_assignments.store') }}" method="POST" class="card p-4 shadow-sm">
+    <form action="{{ route('admin.classroom_assignments.store') }}" method="POST" class="card p-4 shadow-sm">
         @csrf
         @include('admin.features.partials.classroom_form', ['allocation' => null])
 
         <button type="submit" class="btn btn-primary">Allocate</button>
-        <a href="{{ route('classroom_assignments.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('admin.classroom_assignments.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 @endsection

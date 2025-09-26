@@ -13,7 +13,7 @@
         <h2 class="text-center mb-3">Admin Login</h2>
         <p class="text-center text-muted">Sign in to access the admin dashboard</p>
 
-        <form action="{{ route('admin.dashboard') }}" method="GET">
+        <form action="{{ route('admin.login.submit') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="username" class="form-label">Admin Username</label>

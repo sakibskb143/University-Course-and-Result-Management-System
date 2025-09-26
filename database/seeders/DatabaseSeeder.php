@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Student;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,15 +14,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Example default user
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        if (!User::where('username', 'admin001')->exists()) {
+            User::create([
+                'username' => 'admin001',
+                'name' => 'Super Admin',
+                'email' => 'admin@example.com',
+                'role' => 'admin',
+                'password' => 'password',
+            ]);
+        }
 
-        // Call other seeders
+        if (!User::where('username', 'teacher001')->exists()) {
+            User::create([
+                'username' => 'teacher001',
+                'name' => 'Test Teacher',
+                'email' => 'teacher@example.com',
+                'role' => 'teacher',
+                'password' => 'password',
+            ]);
+        }
+
+        if (!User::where('username', 'student001')->exists()) {
+            User::create([
+                'username' => 'student001',
+                'name' => 'Test Student',
+                'email' => 'student@example.com',
+                'role' => 'student',
+                'password' => 'password',
+            ]);
+        }
+
         $this->call([
-            StudentSeeder::class,  // this will generate 50 fake students
+            StudentSeeder::class,
         ]);
     }
 }

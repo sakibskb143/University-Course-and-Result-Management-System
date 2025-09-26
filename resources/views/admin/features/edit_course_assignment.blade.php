@@ -6,7 +6,7 @@
 <div class="content-section">
     <h4>Edit Course Assignment</h4>
 
-    <form action="{{ route('course_assignments.update', $courseAssignment->id) }}" method="POST">
+    <form action="{{ route('admin.course_assignments.update', $courseAssignment->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -68,7 +68,7 @@
 
         <!-- Buttons -->
         <button type="submit" class="btn btn-success">Update Assignment</button>
-        <a href="{{ route('course_assignments.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('admin.course_assignments.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 

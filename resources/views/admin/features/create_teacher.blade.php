@@ -6,7 +6,7 @@
 <div class="content-section">
     <h4>Add Teacher</h4>
 
-    <form action="{{ route('teachers.store') }}" method="POST">
+    <form action="{{ route('admin.teachers.store') }}" method="POST">
         @csrf
 
         <!-- Department -->
@@ -66,7 +66,7 @@
         </div>
 
         <button type="submit" class="btn btn-success">Save</button>
-        <a href="{{ route('teachers.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('admin.teachers.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 @endsection

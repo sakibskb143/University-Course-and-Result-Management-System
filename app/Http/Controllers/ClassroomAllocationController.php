@@ -29,7 +29,7 @@ class ClassroomAllocationController extends Controller
     public function store(ClassroomAllocationRequest $request)
     {
         ClassroomAllocation::create($request->validated());
-        return redirect()->route('classroom_assignments.index')->with('success', 'Classroom allocated successfully!');
+        return redirect()->route('admin.classroom_assignments.index')->with('success', 'Classroom allocated successfully!');
     }
 
    public function edit(ClassroomAllocation $classroom_assignment)
@@ -49,12 +49,12 @@ class ClassroomAllocationController extends Controller
     public function update(ClassroomAllocationRequest $request, ClassroomAllocation $classroom_assignment)
     {
         $classroom_assignment->update($request->validated());
-        return redirect()->route('classroom_assignments.index')->with('success', 'Classroom allocation updated successfully!');
+        return redirect()->route('admin.classroom_assignments.index')->with('success', 'Classroom allocation updated successfully!');
     }
 
     public function destroy(ClassroomAllocation $classroom_assignment)
     {
         $classroom_assignment->delete();
-        return redirect()->route('classroom_assignments.index')->with('success', 'Classroom allocation deleted!');
+        return redirect()->route('admin.classroom_assignments.index')->with('success', 'Classroom allocation deleted!');
     }
 }

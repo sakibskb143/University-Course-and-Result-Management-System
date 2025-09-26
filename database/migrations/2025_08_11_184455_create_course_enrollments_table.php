@@ -14,13 +14,15 @@ return new class extends Migration {
             $table->enum('status', ['Pending','Approved'])->default('Pending');
             $table->decimal('course_fee', 10, 2)->nullable(); // fill from logic: course.credit * 2100
             $table->decimal('total_cost', 10, 2)->nullable();
+            $table->unsignedInteger('semester_id');
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('restrict');
 
             // a student shouldn't request the same course+exam_type twice for the same semester
-            $table->unique(['student_id','course_id','exam_type']);
+            $table->unique(['student_id','course_id','exam_type','semester_id']);
         });
     }
 

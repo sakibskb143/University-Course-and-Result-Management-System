@@ -28,7 +28,7 @@ class CourseAssignmentController extends Controller
     public function store(StoreCourseAssignmentRequest $request)
     {
         CourseAssignment::create($request->validated());
-        return redirect()->route('course_assignments.index')->with('success', 'Course assigned successfully!');
+        return redirect()->route('admin.course_assignments.index')->with('success', 'Course assigned successfully!');
     }
 
     public function edit(CourseAssignment $course_assignment)
@@ -42,12 +42,12 @@ class CourseAssignmentController extends Controller
     public function update(UpdateCourseAssignmentRequest $request, CourseAssignment $course_assignment)
     {
         $course_assignment->update($request->validated());
-        return redirect()->route('course_assignments.index')->with('success', 'Course assignment updated successfully!');
+        return redirect()->route('admin.course_assignments.index')->with('success', 'Course assignment updated successfully!');
     }
 
     public function destroy(CourseAssignment $course_assignment)
     {
         $course_assignment->delete();
-        return redirect()->route('course_assignments.index')->with('success', 'Course assignment deleted successfully!');
+        return redirect()->route('admin.course_assignments.index')->with('success', 'Course assignment deleted successfully!');
     }
 }

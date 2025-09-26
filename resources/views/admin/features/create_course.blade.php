@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <form action="{{ route('courses.store') }}" method="POST">
+        <form action="{{ route('admin.courses.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label>Department</label>
@@ -63,7 +63,7 @@
 
 
             <div class="d-flex justify-content-between">
-                <a href="{{ route('courses.index') }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ route('admin.courses.index') }}" class="btn btn-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary">Add Course</button>
             </div>
         </form>

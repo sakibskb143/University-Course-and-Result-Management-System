@@ -16,16 +16,16 @@
     </div>
     <div class="mb-3 col-md-4">
         <label class="form-label">Semester</label>
-        <select class="form-select" name="semester" required>
+        <select class="form-select" name="semester_id" required>
             <option value="">-- Select Semester --</option>
-            @for ($i = 1; $i <= 8; $i++)
-                <option value="{{ $i }}"
-                    {{ old('semester', $allocation->semester ?? '') == $i ? 'selected' : '' }}>
-                    {{ $i }}
+            @foreach(\App\Models\Semester::all() as $sem)
+                <option value="{{ $sem->id }}"
+                    {{ old('semester_id', $allocation->semester_id ?? '') == $sem->id ? 'selected' : '' }}>
+                    {{ $sem->semester_name }}
                 </option>
-            @endfor
+            @endforeach
         </select>
-        @error('semester')
+        @error('semester_id')
             <small class="text-danger">{{ $message }}</small>
         @enderror
     </div>

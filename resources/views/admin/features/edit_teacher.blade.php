@@ -6,7 +6,7 @@
 <div class="content-section">
     <h4>Edit Teacher</h4>
 
-    <form action="{{ route('teachers.update', $teacher->id) }}" method="POST">
+    <form action="{{ route('admin.teachers.update', $teacher->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -68,7 +68,7 @@
         </div>
 
         <button type="submit" class="btn btn-success">Update</button>
-        <a href="{{ route('teachers.index') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ route('admin.teachers.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 @endsection
