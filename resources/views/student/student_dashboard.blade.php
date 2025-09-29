@@ -113,6 +113,14 @@
 
 <body>
 
+@php
+    $enrollments = $enrollments ?? collect();
+    $availableCourses = $availableCourses ?? collect();
+    $schedule = $schedule ?? collect();
+    $summary = $summary ?? ['enrolledCount'=>0,'totalCredits'=>0,'cgpa'=>null];
+    $user = $user ?? auth()->user();
+@endphp
+
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
@@ -142,8 +150,8 @@
                 <div class="admin-info">
                     <i class="fa-solid fa-user-circle"></i>
                     <div class="admin-details primary-color">
-                        <strong>Jane Student</strong>
-                        <small>student@university.com</small>
+                        <strong>{{ $user->name ?? 'Student' }}</strong>
+                        <small>{{ $user->email ?? '' }}</small>
                     </div>
                 </div>
             </div>
@@ -151,23 +159,29 @@
             <div class="p-4">
                 <!-- Dashboard Overview -->
                 <div id="dashboard" class="content-section active">
+                    @if(session('status'))
+                        <div class="alert alert-success">{{ session('status') }}</div>
+                    @endif
+                    @if(session('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
                     <div class="row g-3">
                         <div class="col-md-4">
                             <div class="card shadow-sm p-3 bg-clr-1 text-white">
                                 <h5>Enrolled Courses</h5>
-                                <h2>5</h2>
+                                <h2>{{ $summary['enrolledCount'] ?? 0 }}</h2>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card shadow-sm p-3 bg-clr-2 text-white">
                                 <h5>CGPA</h5>
-                                <h2>3.85</h2>
+                                <h2>{{ $summary['cgpa'] ?? 'N/A' }}</h2>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card shadow-sm p-3 bg-clr-3 text-white">
                                 <h5>Credits</h5>
-                                <h2>15</h2>
+                                <h2>{{ $summary['totalCredits'] ?? 0 }}</h2>
                             </div>
                         </div>
                     </div>
@@ -177,68 +191,104 @@
                 <div id="enroll" class="content-section">
                     <h4>Enroll in Courses</h4>
                     <p>Select your preferred courses for the semester.</p>
-                    <table class="table table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>Credits</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>CSE301</td>
-                                <td>Operating Systems</td>
-                                <td>3</td>
-                                <td><button class="btn btn-primary btn-sm">Enroll</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    @if(isset($availableCourses) && count($availableCourses))
+                        <form method="GET" action="{{ route('student.dashboard') }}">
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <label class="fw-semibold">Exam Type:</label>
+                                <select name="exam_type" class="form-select form-select-sm" style="width:auto;">
+                                    <option value="Regular">Regular</option>
+                                    <option value="Recourse">Recourse</option>
+                                    <option value="Retake">Retake</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm">Enroll Selected</button>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th style="width:40px;"><input type="checkbox" id="checkAll"></th>
+                                        <th>Course Code</th>
+                                        <th>Course Name</th>
+                                        <th>Credits</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($availableCourses as $course)
+                                        <tr>
+                                            <td><input type="checkbox" name="enroll_course_ids[]" value="{{ $course->id }}" class="row-check"></td>
+                                            <td>{{ $course->course_code }}</td>
+                                            <td>{{ $course->course_name }}</td>
+                                            <td>{{ $course->credit }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </form>
+                    @else
+                        <div class="alert alert-info">No courses available to enroll at this time.</div>
+                    @endif
+
+                    <h5 class="mt-4">My Enrollments</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Credits</th>
+                                    <th>Exam Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($enrollments as $en)
+                                    <tr>
+                                        <td>{{ $en->course_code }}</td>
+                                        <td>{{ $en->course_name }}</td>
+                                        <td>{{ $en->credit }}</td>
+                                        <td>{{ $en->exam_type }}</td>
+                                        <td>{{ $en->status }}</td>
+                                    </tr>
+                                @empty
+                                    <tr><td colspan="5">No enrollments yet.</td></tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <!-- View Results -->
                 <div id="results" class="content-section">
                     <h4>View Result</h4>
-                    <table class="table table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Course</th>
-                                <th>Grade</th>
-                                <th>Credit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Data Structures</td>
-                                <td>A</td>
-                                <td>3</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="alert alert-secondary">Use the sidebar link to view published results.</div>
                 </div>
 
                 <!-- Class Schedule -->
                 <div id="schedule" class="content-section">
                     <h4>Class Schedule</h4>
-                    <table class="table table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>Course</th>
-                                <th>Day</th>
-                                <th>Time</th>
-                                <th>Room</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Operating Systems</td>
-                                <td>Sunday</td>
-                                <td>10:00 AM - 11:30 AM</td>
-                                <td>Room 205</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    @if(isset($schedule) && count($schedule))
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Day</th>
+                                    <th>Time</th>
+                                    <th>Room</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($schedule as $slot)
+                                    <tr>
+                                        <td>{{ optional($slot->course)->course_code }} - {{ optional($slot->course)->course_name }}</td>
+                                        <td>{{ $slot->day }}</td>
+                                        <td>{{ $slot->time_from }} - {{ $slot->time_to }}</td>
+                                        <td>{{ optional($slot->room)->room_no }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
+                        <div class="alert alert-info">No schedule found for your department/semester.</div>
+                    @endif
                 </div>
 
             </div>
@@ -261,6 +311,13 @@
             }
         });
     });
+
+    const checkAll = document.getElementById('checkAll');
+    if (checkAll) {
+        checkAll.addEventListener('change', function() {
+            document.querySelectorAll('.row-check').forEach(cb => { cb.checked = checkAll.checked; });
+        });
+    }
 </script>
 
 </body>

@@ -16,6 +16,8 @@ Route::get('/student', function () {
     return view('student.student_dashboard');
 })->name('student.dashboard');
 
+Route::get('/student/dashboard', [App\Http\Controllers\Student\DashboardController::class, 'index'])->name('student.dashboard');
+
 Route::get('/teacher', function () {
     return view('teacher.teacher_dashboard');
 })->name('teacher.dashboard');
