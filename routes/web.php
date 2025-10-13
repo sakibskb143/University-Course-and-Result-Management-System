@@ -23,8 +23,8 @@ Route::get('/', [PortalController::class, 'index'])->name('portal.home');
 
 // Compatibility entry routes matching existing frontend GET actions
 Route::get('/admin', [EntryController::class, 'admin']);
-Route::get('/teacher', [EntryController::class, 'teacher'])->name('teacher.dashboard');
-Route::get('/student', [EntryController::class, 'student'])->name('student.dashboard');
+Route::get('/teacher', [EntryController::class, 'teacher'])->name('teacher.entry');
+Route::get('/student', [EntryController::class, 'student'])->name('student.entry');
 // Authentication: role-specific GET/POST
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');

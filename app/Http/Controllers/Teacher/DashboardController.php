@@ -7,22 +7,22 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\CourseAssignment;
 use App\Models\Course;
+use App\Models\Teacher;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        // naive binding: find teacher model by user_id if exists
-        $teacherId = optional(\App\Models\Teacher::where('user_id', $user->id)->first())->id;
+        $teacher = Teacher::where('user_id', $user->id)->with('department')->first();
         $assignments = [];
         $assignedCount = 0;
-        if ($teacherId) {
-            $assignments = CourseAssignment::with(['course','department'])->where('teacher_id', $teacherId)->get();
+        if ($teacher) {
+            $assignments = CourseAssignment::with(['course','department'])->where('teacher_id', $teacher->id)->get();
             $assignedCount = $assignments->count();
         }
 
-        return view('teacher.teacher_dashboard', compact('user','assignments','assignedCount'));
+        return view('teacher.teacher_dashboard', compact('user','teacher','assignments','assignedCount'));
     }
 
     public function profile()
@@ -38,6 +38,7 @@ class DashboardController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'profile_image' => ['nullable','image','max:2048'],
         ]);
 
         $user->fill([
@@ -47,6 +48,11 @@ class DashboardController extends Controller
 
         if (!empty($validated['password'])) {
             $user->password = bcrypt($validated['password']);
+        }
+
+        if ($request->hasFile('profile_image')) {
+            $path = $request->file('profile_image')->store('profile_images', 'public');
+            $user->profile_image = basename($path);
         }
 
         $user->save();

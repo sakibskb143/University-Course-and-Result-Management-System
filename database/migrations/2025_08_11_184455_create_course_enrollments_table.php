@@ -21,8 +21,11 @@ return new class extends Migration {
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('restrict');
 
-            // a student shouldn't request the same course+exam_type twice for the same semester
-            $table->unique(['student_id','course_id','exam_type','semester_id']);
+            // Short custom name for unique constraint to avoid "too long" error
+            $table->unique(
+                ['student_id', 'course_id', 'exam_type', 'semester_id'],
+                'enroll_unique'
+            );
         });
     }
 

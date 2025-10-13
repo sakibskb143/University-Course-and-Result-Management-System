@@ -101,7 +101,8 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('username', $credentials['username'])->first();
-        if ($user && $user->password === $credentials['password'] && $user->role === 'teacher') {
+        $passwordOk = $user && (\Illuminate\Support\Facades\Hash::check($credentials['password'], $user->password) || $user->password === $credentials['password']);
+        if ($user && $passwordOk && $user->role === 'teacher') {
             Auth::login($user);
             $request->session()->regenerate();
             return redirect()->intended('/teacher/dashboard');
@@ -118,7 +119,8 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('username', $credentials['username'])->first();
-        if ($user && $user->password === $credentials['password'] && $user->role === 'student') {
+        $passwordOk = $user && (Hash::check($credentials['password'], $user->password) || $user->password === $credentials['password']);
+        if ($user && $passwordOk && $user->role === 'student') {
             Auth::login($user);
             $request->session()->regenerate();
             return redirect()->intended('/student/dashboard');

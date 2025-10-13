@@ -102,8 +102,8 @@
                 <div class="admin-info">
                     <i class="fa-solid fa-user-circle"></i>
                     <div class="admin-details primary-color">
-                        <strong>John Teacher</strong>
-                        <small>teacher@university.com</small>
+                        <strong>{{ $teacher->teacher_name ?? $user->name }}</strong>
+                        <small>{{ $teacher->email ?? $user->email }}</small>
                     </div>
                 </div>
             </div>
@@ -111,23 +111,35 @@
             <div class="p-4">
                 <!-- Dashboard Overview -->
                 <div id="dashboard" class="content-section active">
+                    <div class="mb-4">
+                        <div class="alert alert-info mb-0">
+                            👋 Welcome, <strong>{{ $teacher->teacher_name ?? $user->name }}</strong>
+                            <div class="mt-2 small">
+                                <div><strong>Email:</strong> {{ $teacher->email ?? $user->email }}</div>
+                                @if(isset($teacher))
+                                    <div><strong>Department:</strong> {{ optional($teacher->department)->department_name }}</div>
+                                    <div><strong>Designation:</strong> {{ $teacher->designation }}</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                     <div class="row g-3">
                         <div class="col-md-4">
                             <div class="card shadow-sm p-3 bg-clr-1 text-white">
                                 <h5>Assigned Courses</h5>
-                                <h2>3</h2>
+                                <h2>{{ $assignedCount }}</h2>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card shadow-sm p-3 bg-clr-2 text-white">
-                                <h5>Classes This Week</h5>
-                                <h2>12</h2>
+                                <h5>Class Schedule</h5>
+                                <h2>View</h2>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="card shadow-sm p-3 bg-clr-3 text-white">
-                                <h5>Results Saved</h5>
-                                <h2>45</h2>
+                                <h5>Save Student Results</h5>
+                                <h2>Go</h2>
                             </div>
                         </div>
                     </div>
