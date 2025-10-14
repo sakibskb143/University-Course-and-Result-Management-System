@@ -13,16 +13,34 @@
         <h2 class="text-center mb-3">Student Login</h2>
         <p class="text-center text-muted">Sign in to access your student dashboard</p>
 
+        @if(session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
         <form action="{{ route('student.login.submit') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="username" class="form-label">Student ID</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Enter Student ID" required autofocus>
+                <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" name="username" placeholder="Enter Student ID" value="{{ old('username') }}" required autofocus>
+                @error('username')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Student Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">

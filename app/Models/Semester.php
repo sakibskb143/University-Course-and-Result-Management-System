@@ -5,30 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Semester extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'student_reg_no',
-        'student_name',
-        'email',
-        'contact_no',
-        'address',
-        'year',
-        'department_id',
-        'semester',
+        'semester_name',
+        'semester_code',
+        'is_active'
     ];
 
-    public function department()
-    {
-        return $this->belongsTo(Department::class);
-    }
+    protected $casts = [
+        'is_active' => 'boolean'
+    ];
 
-    public function user()
+    public function courses()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Course::class);
     }
 
     public function enrollments()
@@ -39,5 +32,10 @@ class Student extends Model
     public function results()
     {
         return $this->hasMany(Result::class);
+    }
+
+    public function classroomAllocations()
+    {
+        return $this->hasMany(ClassroomAllocation::class);
     }
 }

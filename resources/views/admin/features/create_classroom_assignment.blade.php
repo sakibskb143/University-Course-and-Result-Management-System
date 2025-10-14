@@ -17,11 +17,14 @@
     @endif
 
     <form action="{{ route('admin.classroom_assignments.store') }}" method="POST" class="card p-4 shadow-sm">
-        @csrf
-        @include('admin.features.partials.classroom_form', ['allocation' => null])
+    @csrf
+    @include('admin.features.partials.classroom_form', ['allocation' => null])
 
-        <button type="submit" class="btn btn-primary">Allocate</button>
-        <a href="{{ route('admin.classroom_assignments.index') }}" class="btn btn-secondary">Cancel</a>
-    </form>
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary flex-fill">Allocate</button>
+        <a href="{{ route('admin.classroom_assignments.index') }}" class="btn btn-secondary flex-fill">Cancel</a>
+    </div>
+</form>
+
 </div>
 @endsection

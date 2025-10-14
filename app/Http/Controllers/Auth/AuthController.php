@@ -31,10 +31,10 @@ class AuthController extends Controller
             if ($passwordOk) {
                 Auth::login($user);
                 $request->session()->regenerate();
-                return match ($user->role) {
-                    'admin' => redirect()->intended('/admin/dashboard'),
-                    'teacher' => redirect()->intended('/teacher/dashboard'),
-                    'student' => redirect()->intended('/student/dashboard'),
+                return match (strtolower((string)$user->role)) {
+                    'admin' => redirect()->intended(route('admin.dashboard')),
+                    'teacher' => redirect()->intended(route('teacher.dashboard')),
+                    'student' => redirect()->intended(route('student.dashboard')),
                     default => redirect('/'),
                 };
             }
@@ -55,6 +55,11 @@ class AuthController extends Controller
 
     public function showStudentLoginForm()
     {
+        \Log::info('Student login page requested', [
+            'route' => 'student.login',
+            'authenticated' => auth()->check(),
+            'user_id' => auth()->id(),
+        ]);
         return view('auth.student_login');
     }
 
@@ -76,7 +81,7 @@ class AuthController extends Controller
                 'input_password' => $credentials['password'],
                 'password_match' => $user->password === $credentials['password'],
                 'user_role' => $user->role,
-                'role_match' => $user->role === 'admin'
+                'role_match' => strtolower((string)$user->role) === 'admin'
             ]);
         } else {
             \Log::info('Login attempt - user not found', [
@@ -84,10 +89,10 @@ class AuthController extends Controller
             ]);
         }
         
-        if ($user && $user->password === $credentials['password'] && $user->role === 'admin') {
+        if ($user && (string)$user->password === (string)$credentials['password'] && strtolower((string)$user->role) === 'admin') {
             Auth::login($user);
             $request->session()->regenerate();
-            return redirect()->intended('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         return back()->withErrors(['username' => 'Invalid credentials or role.'])->withInput();
@@ -101,10 +106,10 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('username', $credentials['username'])->first();
-        if ($user && $user->password === $credentials['password'] && $user->role === 'teacher') {
+        if ($user && (string)$user->password === (string)$credentials['password'] && strtolower((string)$user->role) === 'teacher') {
             Auth::login($user);
             $request->session()->regenerate();
-            return redirect()->intended('/teacher/dashboard');
+            return redirect()->route('teacher.dashboard');
         }
 
         return back()->withErrors(['username' => 'Invalid credentials or role.'])->withInput();
@@ -118,10 +123,10 @@ class AuthController extends Controller
         ]);
 
         $user = User::where('username', $credentials['username'])->first();
-        if ($user && $user->password === $credentials['password'] && $user->role === 'student') {
+        if ($user && (string)$user->password === (string)$credentials['password'] && strtolower((string)$user->role) === 'student') {
             Auth::login($user);
             $request->session()->regenerate();
-            return redirect()->intended('/student/dashboard');
+            return redirect()->route('student.dashboard');
         }
 
         return back()->withErrors(['username' => 'Invalid credentials or role.'])->withInput();

@@ -23,8 +23,9 @@ Route::get('/', [PortalController::class, 'index'])->name('portal.home');
 
 // Compatibility entry routes matching existing frontend GET actions
 Route::get('/admin', [EntryController::class, 'admin']);
-Route::get('/teacher', [EntryController::class, 'teacher'])->name('teacher.dashboard');
-Route::get('/student', [EntryController::class, 'student'])->name('student.dashboard');
+// Avoid conflicting route names with actual dashboards; these are entry helpers only
+Route::get('/teacher', [EntryController::class, 'teacher'])->name('teacher.entry');
+Route::get('/student', [EntryController::class, 'student'])->name('student.entry');
 // Authentication: role-specific GET/POST
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
@@ -65,6 +66,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {
     Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('teacher.dashboard');
+    Route::get('/assigned-classes', [TeacherDashboardController::class, 'assignedClasses'])->name('teacher.assigned-classes');
+    Route::get('/class-schedule', [TeacherDashboardController::class, 'classSchedule'])->name('teacher.class-schedule');
+    Route::get('/save-results', [TeacherDashboardController::class, 'saveResults'])->name('teacher.save-results');
+    Route::post('/get-course-students', [TeacherDashboardController::class, 'getCourseStudents'])->name('teacher.get-course-students');
+    Route::post('/save-student-results', [TeacherDashboardController::class, 'saveStudentResults'])->name('teacher.save-student-results');
     Route::get('/profile', [TeacherDashboardController::class, 'profile'])->name('teacher.profile');
     Route::post('/profile', [TeacherDashboardController::class, 'updateProfile'])->name('teacher.profile.update');
 });
@@ -78,9 +84,13 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function (
 Route::middleware(['auth', 'role:student'])->prefix('student')->group(function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('student.dashboard');
     Route::get('/profile', [StudentDashboardController::class, 'profile'])->name('student.profile');
-    Route::post('/profile', [StudentDashboardController::class, 'updateProfile'])->name('student.profile.update');
+    Route::put('/profile', [StudentDashboardController::class, 'updateProfile'])->name('student.profile.update');
+    Route::get('/class-schedule', [StudentDashboardController::class, 'classSchedule'])->name('student.class-schedule');
+    Route::get('/enroll-courses', [StudentDashboardController::class, 'enrollCourses'])->name('student.enroll-courses');
+    Route::post('/enroll-course', [StudentDashboardController::class, 'enrollInCourse'])->name('student.enroll-course');
+    Route::get('/view-results', [StudentDashboardController::class, 'viewResults'])->name('student.view-results');
 
-    // Student published results
+    // Student published results (legacy route)
     Route::get('/results', [ResultController::class, 'studentResults'])->name('student.results');
 });
 
