@@ -30,7 +30,7 @@
             @forelse($allocations as $allocation)
                 <tr>
                     <td>{{ $allocation->department->department_name }}</td>
-                    <td>{{ optional($allocation->course)->semester ?? optional($allocation->semester)->semester_name ?? $allocation->semester_id }}</td>
+                    <td>{{ optional($allocation->semester)->semester_name ?? 'N/A' }}</td>
                     <td>{{ $allocation->course->course_name }}</td>
                    <td>{{ $allocation->room->room_no }}</td>
                     <td>{{ $allocation->day }}</td>

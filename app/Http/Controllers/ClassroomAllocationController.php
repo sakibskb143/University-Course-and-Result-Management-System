@@ -12,10 +12,10 @@ class ClassroomAllocationController extends Controller
 {
     public function index()
     {
-        $allocations = ClassroomAllocation::with(['department', 'course', 'room'])->paginate(10);
+        $allocations = ClassroomAllocation::with(['department', 'course', 'room', 'semester'])->paginate(10);
         return view('admin.features.classroom_assignments', compact('allocations'));
-        // points to: resources/views/admin/features/classroom_assignments.blade.php
     }
+    
 
     public function create()
     {
